@@ -1,0 +1,410 @@
+@import "tailwindcss";
+
+:root {
+  --background: #070b14;
+  --foreground: #f8fafc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: rgba(99, 102, 241, 0.35);
+  color: #ffffff;
+}
+
+/* Date input calendar icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.55;
+  filter: invert(1);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 0.85;
+}
+
+/* =========================================================
+   BOOKING DATE — ANIMATED HIGHLIGHT
+   ========================================================= */
+
+   @keyframes booking-date-flow {
+    0% {
+      background-position: 100% 50%;
+    }
+  
+    50% {
+      background-position: 0% 50%;
+    }
+  
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  .animate-booking-date-flow {
+    animation: booking-date-flow 4s ease-in-out infinite;
+  }
+
+/* =========================================================
+   RAILDATE CUSTOM CALENDAR
+   ========================================================= */
+
+.rail-calendar {
+  position: relative;
+
+  width: 100%;
+  color: #e2e8f0;
+
+  --rdp-accent-color: #6366f1;
+  --rdp-accent-background-color: rgba(99, 102, 241, 0.12);
+
+  --rdp-day-width: 48px;
+  --rdp-day-height: 48px;
+
+  --rdp-day_button-width: 42px;
+  --rdp-day_button-height: 42px;
+
+  --rdp-nav-height: 54px;
+
+  --rdp-nav_button-width: 40px;
+  --rdp-nav_button-height: 40px;
+
+  --rdp-weekday-opacity: 1;
+  --rdp-weekday-padding: 8px 0;
+
+  --rdp-months-gap: 0;
+
+  --rdp-month_button-height: 40px;
+
+  --rdp-disabled-opacity: 0.24;
+}
+
+/* =========================================================
+     MONTH
+     ========================================================= */
+
+.rail-calendar-months {
+  width: 100%;
+}
+
+.rail-calendar-month {
+  width: 100%;
+}
+
+/* =========================================================
+     MONTH HEADER
+     ========================================================= */
+
+.rail-calendar-caption {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 54px;
+
+  margin-bottom: 6px;
+
+  z-index: 5;
+}
+
+.rail-calendar-caption-label {
+  font-size: 16px;
+  font-weight: 650;
+
+  letter-spacing: -0.015em;
+
+  color: #f8fafc;
+}
+
+/* =========================================================
+     NAVIGATION
+     ========================================================= */
+
+.rail-calendar-nav {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  /*
+     * Keep the buttons slightly inside the
+     * calendar edges.
+     */
+  padding: 0 2px;
+
+  /*
+     * The navigation container itself should
+     * not block interaction with the calendar.
+     */
+  pointer-events: none;
+
+  /*
+     * Keep the navigation above the calendar
+     * content without affecting the date grid.
+     */
+  z-index: 10;
+}
+
+.rail-calendar-nav-button {
+  pointer-events: auto;
+
+  display: inline-flex;
+
+  width: 40px;
+  height: 40px;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+
+  border-radius: 13px;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  color: #94a3b8;
+
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+
+  transition: background-color 180ms ease, border-color 180ms ease,
+    color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.rail-calendar-nav-button:hover:not(:disabled) {
+  border-color: rgba(129, 140, 248, 0.35);
+
+  background: rgba(99, 102, 241, 0.11);
+
+  color: #c7d2fe;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 8px 22px rgba(99, 102, 241, 0.15);
+}
+
+.rail-calendar-nav-button:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.rail-calendar-nav-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.2;
+}
+
+/* =========================================================
+     CALENDAR GRID
+     ========================================================= */
+
+.rail-calendar-grid {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 4px;
+}
+
+.rail-calendar-weekdays {
+  height: 30px;
+}
+
+.rail-calendar-weekday {
+  width: 14.285%;
+  padding: 0;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #475569;
+}
+
+.rail-calendar-week {
+  height: 48px;
+}
+
+.rail-calendar-day {
+  position: relative;
+  width: 14.285%;
+  padding: 0;
+  text-align: center;
+}
+
+.rail-calendar-day-button {
+  position: relative;
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: #cbd5e1;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background-color 180ms ease, border-color 180ms ease,
+    color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.rail-calendar-day-button:hover:not(:disabled) {
+  border-color: rgba(129, 140, 248, 0.2);
+  background: rgba(99, 102, 241, 0.1);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.rail-calendar-day-button:focus-visible {
+  outline: none;
+  border-color: rgba(99, 102, 241, 0.7);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+/* =========================================================
+     SELECTED
+     ========================================================= */
+
+.rail-calendar-selected .rail-calendar-day-button {
+  border-color: transparent;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 48%, #06b6d4 100%);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.28);
+}
+
+.rail-calendar-selected .rail-calendar-day-button:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 10px 28px rgba(99, 102, 241, 0.35);
+}
+
+/* =========================================================
+     TODAY
+     ========================================================= */
+
+.rail-calendar-today .rail-calendar-day-button:not(.rail-calendar-selected) {
+  border-color: rgba(99, 102, 241, 0.35);
+
+  color: #a5b4fc;
+}
+
+.rail-calendar-today
+  .rail-calendar-day-button:not(.rail-calendar-selected)::after {
+  position: absolute;
+
+  bottom: 4px;
+  left: 50%;
+
+  width: 4px;
+  height: 4px;
+
+  border-radius: 999px;
+
+  background: #22d3ee;
+
+  content: "";
+
+  transform: translateX(-50%);
+}
+
+/* =========================================================
+     DISABLED
+     ========================================================= */
+
+.rail-calendar-disabled .rail-calendar-day-button {
+  cursor: not-allowed;
+
+  color: #334155;
+}
+
+.rail-calendar-disabled .rail-calendar-day-button:hover {
+  transform: none;
+
+  border-color: transparent;
+
+  background: transparent;
+}
+
+/* =========================================================
+     OUTSIDE DAYS
+     ========================================================= */
+
+.rail-calendar-outside .rail-calendar-day-button {
+  color: #263244;
+}
+
+/* =========================================================
+     MOBILE
+     ========================================================= */
+
+@media (max-width: 640px) {
+  .rail-calendar {
+    --rdp-day-width: 42px;
+    --rdp-day-height: 42px;
+
+    --rdp-day_button-width: 38px;
+    --rdp-day_button-height: 38px;
+  }
+
+  .rail-calendar-caption {
+    height: 50px;
+  }
+
+  .rail-calendar-nav {
+    height: 50px;
+    padding: 0;
+  }
+
+  .rail-calendar-nav-button {
+    width: 36px;
+    height: 36px;
+
+    border-radius: 11px;
+  }
+
+  .rail-calendar-day-button {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 11px;
+  }
+
+  .rail-calendar-week {
+    height: 42px;
+  }
+
+  .rail-calendar-caption-label {
+    font-size: 14px;
+  }
+
+  .rail-calendar-weekday {
+    font-size: 9px;
+  }
+}
