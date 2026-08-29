@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="200 200 600 600"
+>
+  <defs>
+    <linearGradient
+      id="linear-gradient"
+      x1="770.86"
+      y1="770.86"
+      x2="229.14"
+      y2="229.14"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0" stop-color="#42c4e5"/>
+      <stop offset="1" stop-color="#5e64ad"/>
+    </linearGradient>
+  </defs>
+
+  <rect
+    fill="url(#linear-gradient)"
+    x="205.69"
+    y="205.69"
+    width="588.62"
+    height="588.62"
+    rx="80.05"
+    ry="80.05"
+  />
+
+  <g
+    fill="none"
+    stroke="#fff"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="20"
+  >
+    <path d="M417.39 316.19v80.55c0 45.63 36.99 82.61 82.61 82.61s82.61-36.99 82.61-82.61v-80.55"/>
+
+    <path d="M438.04 561.96l-20.65-20.65"/>
+
+    <path d="M561.96 561.96l20.65-20.65"/>
+
+    <path d="M438.04 644.57c-57.83 0-103.27-45.44-103.27-103.27v-82.61c0-91.25 73.97-165.23 165.23-165.23s165.23 73.97 165.23 165.23v82.61c0 57.83-45.44 103.27-103.27 103.27h-123.92Z"/>
+
+    <path d="M417.39 644.57l-41.31 61.96"/>
+
+    <path d="M582.61 644.57l41.31 61.96"/>
+  </g>
+</svg>

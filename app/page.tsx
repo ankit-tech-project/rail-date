@@ -5,25 +5,26 @@ import {
   CalendarDays,
   ArrowRight,
   TrainFront,
-  RotateCcw,
+  ChevronDown,
+  MousePointerClick,
+  Calculator,
+  Clock3,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
 import DatePicker from "@/components/DatePicker";
 import BookingResult from "@/components/BookingResult";
 import { calculateBookingDate } from "@/lib/bookingDate";
-import {
-  formatInputDate,
-  formatLongDate,
-} from "@/lib/dateUtils";
+import { formatInputDate } from "@/lib/dateUtils";
 
 export default function Home() {
   const [journeyDate, setJourneyDate] = useState("");
-  const [result, setResult] = useState<
-    ReturnType<typeof calculateBookingDate> | null
-  >(null);
+  const [result, setResult] = useState<ReturnType<
+    typeof calculateBookingDate
+  > | null>(null);
 
   const [error, setError] = useState("");
+  const [showHowItWorks, setShowHowItWorks] = useState(false);
 
   /*
    * Today's date in YYYY-MM-DD format.
@@ -33,21 +34,16 @@ export default function Home() {
     return formatInputDate(new Date());
   }, []);
 
-  
-
   const handleCalculate = () => {
     setError("");
 
     if (!journeyDate) {
-      setError(
-        "Please select your journey date."
-      );
+      setError("Please select your journey date.");
 
       return;
     }
 
-    const calculated =
-      calculateBookingDate(journeyDate);
+    const calculated = calculateBookingDate(journeyDate);
 
     setResult(calculated);
   };
@@ -85,10 +81,7 @@ export default function Home() {
         <header className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-400 shadow-lg shadow-indigo-500/20">
-              <TrainFront
-                size={21}
-                strokeWidth={2.2}
-              />
+              <TrainFront size={21} strokeWidth={2.2} />
             </div>
 
             <div>
@@ -126,25 +119,22 @@ export default function Home() {
             {/* Badge */}
             <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-indigo-400/20 bg-indigo-400/[0.07] px-4 py-2 text-xs font-medium text-indigo-300">
               <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
-
               Plan your journey smarter
             </div>
 
             {/* Heading */}
-            <h1 className="text-4xl font-semibold tracking-[-0.04em] sm:text-5xl lg:text-6xl">
-              Know when to
+            <h1 className="font-lexend text-4xl font-bold tracking-[-0.04em] sm:text-5xl lg:text-6xl">
+              Know When to
               <br />
-
               <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent">
-                book your ticket.
+                Book Your Ticket.
               </span>
             </h1>
 
             {/* Description */}
             <p className="mx-auto mt-6 max-w-xl text-sm leading-7 text-slate-400 sm:text-base">
-              Select your journey date and instantly
-              find out when your train ticket booking
-              window opens.
+              Select your journey date and instantly find out when your Indian
+              Railway train ticket booking window opens.
             </p>
           </motion.div>
 
@@ -175,28 +165,21 @@ export default function Home() {
                     Journey Date
                   </label>
 
-                  <span className="text-[11px] text-slate-600">
-                    Required
-                  </span>
+                  <span className="text-[11px] text-slate-600">Required</span>
                 </div>
 
                 {/* Date input */}
                 <DatePicker
-  value={journeyDate}
-  onChange={(value) => {
-    setJourneyDate(value);
+                  value={journeyDate}
+                  onChange={(value) => {
+                    setJourneyDate(value);
 
-    setError("");
+                    setError("");
 
-    setResult(null);
-  }}
-  minDate={new Date()}
-/>
-
-               
-
-                
-                
+                    setResult(null);
+                  }}
+                  minDate={new Date()}
+                />
 
                 {/* Error */}
                 {error && (
@@ -222,7 +205,6 @@ export default function Home() {
                   className="group mt-4 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 via-violet-500 to-cyan-500 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition-all duration-300 hover:scale-[1.01] hover:shadow-xl hover:shadow-indigo-500/25 active:scale-[0.99]"
                 >
                   Calculate Booking Date
-
                   <ArrowRight
                     size={18}
                     className="transition-transform duration-300 group-hover:translate-x-1"
@@ -233,9 +215,7 @@ export default function Home() {
           </motion.div>
 
           {/* Result */}
-          {result && (
-            <BookingResult result={result} />
-          )}
+          {result && <BookingResult result={result} />}
 
           {/* Information */}
           <motion.div
@@ -249,35 +229,188 @@ export default function Home() {
               duration: 0.7,
               delay: 0.35,
             }}
-            className="mt-8 flex max-w-lg items-start gap-3 text-left"
+            className="mt-8 w-full max-w-2xl"
           >
-            <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/[0.05]">
-              <CalendarDays
-                size={14}
-                className="text-slate-500"
-              />
+            {/* Reservation information */}
+            <div className="flex items-start gap-3 text-left">
+              <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/[0.05]">
+                <CalendarDays size={14} className="text-slate-500" />
+              </div>
+
+              <p className="text-xs leading-5 text-slate-500">
+                The general Advance Reservation Period is 60 days before the
+                journey date, excluding the journey date. Opening-day booking is
+                available after 8:00 AM IST. Some trains may have a shorter
+                reservation period.
+              </p>
             </div>
 
-            <p className="text-xs leading-5 text-slate-500">
-              The general Advance Reservation Period
-              is 60 days before the journey date,
-              excluding the journey date. Opening-day
-              booking is available after 8:00 AM IST.
-              Some trains may have a shorter
-              reservation period.
-            </p>
+            {/* How it works toggle */}
+            <button
+              type="button"
+              onClick={() => setShowHowItWorks((current) => !current)}
+              aria-expanded={showHowItWorks}
+              aria-controls="how-rail-date-works"
+              className="group mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-300 transition-colors duration-200 hover:text-cyan-300"
+            >
+              {showHowItWorks ? "Hide how it works" : "How does RailDate work?"}
+
+              <ChevronDown
+                size={16}
+                className={`transition-transform duration-300 ${
+                  showHowItWorks ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            {/* How it works cards */}
+            <motion.div
+              initial={false}
+              animate={{
+                height: showHowItWorks ? "auto" : 0,
+                opacity: showHowItWorks ? 1 : 0,
+                marginTop: showHowItWorks ? 20 : 0,
+              }}
+              transition={{
+                duration: 0.35,
+                ease: "easeInOut",
+              }}
+              className="overflow-hidden"
+            >
+              <section
+                id="how-rail-date-works"
+                aria-labelledby="how-rail-date-works-title"
+              >
+                <div className="mb-5 text-left">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-indigo-300">
+                    Simple & Clear
+                  </p>
+
+                  <h2
+                    id="how-rail-date-works-title"
+                    className="mt-1 text-lg font-semibold tracking-[-0.02em] text-white"
+                  >
+                    How does RailDate work?
+                  </h2>
+
+                  <p className="mt-1.5 text-xs leading-5 text-slate-500">
+                    Find your Indian Railway ticket booking date in three simple
+                    steps.
+                  </p>
+                </div>
+
+                <div className="grid gap-3 text-left sm:grid-cols-3">
+                  {/* Step 1 */}
+                  <motion.article
+                    initial={{
+                      opacity: 0,
+                      y: 12,
+                    }}
+                    animate={{
+                      opacity: showHowItWorks ? 1 : 0,
+                      y: showHowItWorks ? 0 : 12,
+                    }}
+                    transition={{
+                      duration: 0.3,
+                      delay: showHowItWorks ? 0.05 : 0,
+                    }}
+                    className="rounded-2xl border border-white/[0.08] bg-white/[0.035] p-4 backdrop-blur-xl"
+                  >
+                    <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-300">
+                      <MousePointerClick size={18} />
+                    </div>
+
+                    <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-indigo-300">
+                      Step 01
+                    </p>
+
+                    <h2 className="text-sm font-semibold text-white">
+                      Select Your Journey Date
+                    </h2>
+
+                    <p className="mt-2 text-xs leading-5 text-slate-500">
+                      Choose the date you plan to travel by train.
+                    </p>
+                  </motion.article>
+
+                  {/* Step 2 */}
+                  <motion.article
+                    initial={{
+                      opacity: 0,
+                      y: 12,
+                    }}
+                    animate={{
+                      opacity: showHowItWorks ? 1 : 0,
+                      y: showHowItWorks ? 0 : 12,
+                    }}
+                    transition={{
+                      duration: 0.3,
+                      delay: showHowItWorks ? 0.1 : 0,
+                    }}
+                    className="rounded-2xl border border-white/[0.08] bg-white/[0.035] p-4 backdrop-blur-xl"
+                  >
+                    <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-xl bg-violet-500/10 text-violet-300">
+                      <Calculator size={18} />
+                    </div>
+
+                    <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-violet-300">
+                      Step 02
+                    </p>
+
+                    <h2 className="text-sm font-semibold text-white">
+                      Calculate Your Booking Date
+                    </h2>
+
+                    <p className="mt-2 text-xs leading-5 text-slate-500">
+                      RailDate calculates when your train ticket booking window
+                      opens.
+                    </p>
+                  </motion.article>
+
+                  {/* Step 3 */}
+                  <motion.article
+                    initial={{
+                      opacity: 0,
+                      y: 12,
+                    }}
+                    animate={{
+                      opacity: showHowItWorks ? 1 : 0,
+                      y: showHowItWorks ? 0 : 12,
+                    }}
+                    transition={{
+                      duration: 0.3,
+                      delay: showHowItWorks ? 0.15 : 0,
+                    }}
+                    className="rounded-2xl border border-white/[0.08] bg-white/[0.035] p-4 backdrop-blur-xl"
+                  >
+                    <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-300">
+                      <Clock3 size={18} />
+                    </div>
+
+                    <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-300">
+                      Step 03
+                    </p>
+
+                    <h2 className="text-sm font-semibold text-white">
+                      Plan Ahead & Book
+                    </h2>
+
+                    <p className="mt-2 text-xs leading-5 text-slate-500">
+                      Know your booking date in advance and be ready when
+                      reservations open.
+                    </p>
+                  </motion.article>
+                </div>
+              </section>
+            </motion.div>
           </motion.div>
         </section>
 
         {/* Footer */}
         <footer className="flex flex-col items-center justify-between gap-3 border-t border-white/[0.06] py-6 text-[11px] text-slate-600 sm:flex-row">
-          <p>
-            RAILDATE · Personal Utility
-          </p>
+          <p>RAILDATE · Personal Utility</p>
 
-          <p>
-            Built for easier journey planning.
-          </p>
+          <p>Built for easier journey planning.</p>
         </footer>
       </div>
     </main>

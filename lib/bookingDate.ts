@@ -18,11 +18,7 @@ function parseDate(dateString: string): Date {
 }
 
 function startOfDay(date: Date): Date {
-  return new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate()
-  );
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
 function addDays(date: Date, days: number): Date {
@@ -39,9 +35,7 @@ function differenceInDays(date1: Date, date2: Date): number {
 
   const millisecondsPerDay = 1000 * 60 * 60 * 24;
 
-  return Math.round(
-    (first.getTime() - second.getTime()) / millisecondsPerDay
-  );
+  return Math.round((first.getTime() - second.getTime()) / millisecondsPerDay);
 }
 
 export function calculateBookingDate(
@@ -53,15 +47,9 @@ export function calculateBookingDate(
 
   const normalizedJourneyDate = startOfDay(journeyDate);
 
-  const bookingDate = addDays(
-    normalizedJourneyDate,
-    -ADVANCE_RESERVATION_DAYS
-  );
+  const bookingDate = addDays(normalizedJourneyDate, -ADVANCE_RESERVATION_DAYS);
 
-  const daysUntilBooking = differenceInDays(
-    bookingDate,
-    today
-  );
+  const daysUntilBooking = differenceInDays(bookingDate, today);
 
   return {
     journeyDate: normalizedJourneyDate,
@@ -78,10 +66,6 @@ export function calculateBookingDate(
 
     isBookingPast: daysUntilBooking < 0,
 
-    isJourneyToday:
-      differenceInDays(
-        normalizedJourneyDate,
-        today
-      ) === 0,
+    isJourneyToday: differenceInDays(normalizedJourneyDate, today) === 0,
   };
 }
