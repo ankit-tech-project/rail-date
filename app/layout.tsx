@@ -17,6 +17,10 @@ const lexend = Lexend({
 export const metadata: Metadata = {
   metadataBase: new URL("https://rail-date.vercel.app"),
 
+  verification: {
+    google: "-ny8upjKFMogKVzGNnzrFwKFu0RLmXmAnkVjngygtnQ",
+  },
+
   title: {
     default: "RailDate — Indian Railway Ticket Booking Date Calculator",
     template: "%s | RailDate",
