@@ -14,6 +14,7 @@ import { useState } from "react";
 import { jsPDF } from "jspdf";
 
 import { BookingDateResult } from "@/lib/bookingDate";
+import { useLanguage } from "@/components/LanguageProvider";
 import { formatLongDate } from "@/lib/dateUtils";
 
 interface BookingResultProps {
@@ -21,6 +22,7 @@ interface BookingResultProps {
 }
 
 export default function BookingResult({ result }: BookingResultProps) {
+  const { t, language } = useLanguage();
   const [copied, setCopied] = useState(false);
 
   const journeyDateText = formatLongDate(result.journeyDate);
@@ -437,13 +439,12 @@ export default function BookingResult({ result }: BookingResultProps) {
           />
 
           <div>
-            <p className="text-sm font-semibold text-emerald-300">
-              Booking opens today at 8:00 AM
+            <p className="text-sm text-left font-semibold text-emerald-300">
+              {t("bookingOpensToday")}
             </p>
 
-            <p className="mt-1 text-xs leading-5 text-emerald-300/60">
-              The general opening-day booking window is available after 8:00 AM
-              IST.
+            <p className="mt-1 text-xs text-left leading-5 text-emerald-300/60">
+              {t("bookingOpensTodayDescription")}
             </p>
           </div>
         </div>
@@ -456,12 +457,12 @@ export default function BookingResult({ result }: BookingResultProps) {
           <Clock3 size={20} className="mt-0.5 shrink-0 text-amber-400" />
 
           <div>
-            <p className="text-sm font-semibold text-amber-300">
-              Booking opens tomorrow
+            <p className="text-sm text-left font-semibold text-amber-300">
+              {t("bookingOpensTomorrow")}
             </p>
 
-            <p className="mt-1 text-xs leading-5 text-amber-300/60">
-              Booking opens after 8:00 AM IST tomorrow.
+            <p className="mt-1 text-xs text-left leading-5 text-amber-300/60">
+              {t("bookingOpensTomorrowDescription")}
             </p>
           </div>
         </div>
@@ -476,12 +477,12 @@ export default function BookingResult({ result }: BookingResultProps) {
           <Clock3 size={20} className="mt-0.5 shrink-0 text-indigo-400" />
 
           <div className="text-left">
-            <p className="text-sm font-semibold text-indigo-300">
-              Booking opens in {days} {days === 1 ? "day" : "days"}
+            <p className="text-sm text-left font-semibold text-indigo-300">
+              {t("bookingOpensIn")} {days} {days === 1 ? t("day") : t("days")}
             </p>
 
-            <p className="mt-1 text-xs leading-5 text-indigo-300/60">
-              You can book after 8:00 AM IST on the opening date.
+            <p className="mt-1 text-xs text-left leading-5 text-indigo-300/60">
+              {t("bookingOpensInDescription")}
             </p>
           </div>
         </div>
@@ -493,12 +494,12 @@ export default function BookingResult({ result }: BookingResultProps) {
         <Clock3 size={20} className="mt-0.5 shrink-0 text-slate-500" />
 
         <div>
-          <p className="text-sm font-semibold text-slate-300">
-            Booking window has already opened
+          <p className="text-sm text-left font-semibold text-slate-300">
+            {t("bookingWindowAlreadyOpened")}
           </p>
 
-          <p className="mt-1 text-xs leading-5 text-slate-500">
-            The 60-day opening date has already passed.
+          <p className="mt-1 text-xs text-left leading-5 text-slate-500">
+            {t("bookingWindowAlreadyOpenedDescription")}
           </p>
         </div>
       </div>
@@ -531,13 +532,13 @@ export default function BookingResult({ result }: BookingResultProps) {
           {/* Header */}
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
             <Ticket size={15} className="text-indigo-400" />
-            Booking Information
+            {t("bookingInformation")}
           </div>
 
           {/* Journey */}
           <div className="mt-7">
             <p className="text-xs uppercase tracking-[0.14em] text-slate-500">
-              Your Journey
+              {t("yourJourney")}
             </p>
 
             <div className="mt-2 flex items-center gap-3">
@@ -555,12 +556,10 @@ export default function BookingResult({ result }: BookingResultProps) {
           {/* Booking date */}
           <div>
             <p className="text-xs uppercase tracking-[0.14em] text-indigo-300">
-              You Can Book On
+              {t("youCanBookOn")}
             </p>
 
-            <h2
-              className="mt-2 text-2xl font-extrabold tracking-[-0.025em] text-transparent bg-clip-text bg-[linear-gradient(110deg,#818cf8_0%,#c084fc_22%,#22d3ee_50%,#c084fc_78%,#818cf8_100%)] bg-[length:250%_100%] animate-booking-date-flow drop-shadow-[0_0_18px_rgba(129,140,248,0.18)] sm:text-3xl"
-            >
+            <h2 className="mt-2 text-2xl font-extrabold tracking-[-0.025em] text-transparent bg-clip-text bg-[linear-gradient(110deg,#818cf8_0%,#c084fc_22%,#22d3ee_50%,#c084fc_78%,#818cf8_100%)] bg-[length:250%_100%] animate-booking-date-flow drop-shadow-[0_0_18px_rgba(129,140,248,0.18)] sm:text-3xl">
               {bookingDateText}
             </h2>
 
@@ -568,8 +567,10 @@ export default function BookingResult({ result }: BookingResultProps) {
               <Clock3 size={14} />
 
               <span>
-                Opening time:{" "}
-                <span className="font-medium text-slate-300">8:00 AM IST</span>
+                {t("openingTime")}:{" "}
+                <span className="font-medium text-slate-300">
+                  {t("bookingOpensTime")}
+                </span>
               </span>
             </div>
           </div>
@@ -588,7 +589,7 @@ export default function BookingResult({ result }: BookingResultProps) {
             >
               <Copy size={16} />
 
-              {copied ? "Copied!" : "Copy Date"}
+              {copied ? t("copied") : t("copyDate")}
             </button>
 
             {/* Download PDF */}
@@ -598,7 +599,7 @@ export default function BookingResult({ result }: BookingResultProps) {
               className="flex h-12 items-center justify-center gap-2 rounded-xl border border-indigo-400/20 bg-indigo-400/[0.07] text-sm font-medium text-indigo-300 transition hover:border-indigo-400/30 hover:bg-indigo-400/[0.12] hover:text-indigo-200"
             >
               <Download size={16} />
-              Download PDF
+              {t("downloadPDF")}
             </button>
           </div>
         </div>

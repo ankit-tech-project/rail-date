@@ -14,10 +14,13 @@ import { motion } from "framer-motion";
 
 import DatePicker from "@/components/DatePicker";
 import BookingResult from "@/components/BookingResult";
+import LanguageSelector from "@/components/LanguageSelector";
+import { useLanguage } from "@/components/LanguageProvider";
 import { calculateBookingDate } from "@/lib/bookingDate";
 import { formatInputDate } from "@/lib/dateUtils";
 
 export default function Home() {
+  const { t } = useLanguage();
   const [journeyDate, setJourneyDate] = useState("");
   const [result, setResult] = useState<ReturnType<
     typeof calculateBookingDate
@@ -38,7 +41,7 @@ export default function Home() {
     setError("");
 
     if (!journeyDate) {
-      setError("Please select your journey date.");
+      setError(t("selectJourneyDateError"));
 
       return;
     }
@@ -46,6 +49,13 @@ export default function Home() {
     const calculated = calculateBookingDate(journeyDate);
 
     setResult(calculated);
+
+    setTimeout(() => {
+      document.getElementById("booking-result")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 150);
   };
 
   const handleToday = () => {
@@ -90,13 +100,17 @@ export default function Home() {
               </p>
 
               <p className="text-[10px] tracking-wide text-slate-500">
-                INDIAN RAILWAY DATE CALCULATOR
+                {t("brandSubtitle")}
               </p>
             </div>
           </div>
 
-          <div className="hidden rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs text-slate-400 sm:block">
-            60 Day Advance Reservation
+          <div className="flex items-center gap-2">
+            <div className="hidden rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs text-slate-400 sm:block">
+              {t("advanceReservation")}
+            </div>
+
+            <LanguageSelector />
           </div>
         </header>
 
@@ -119,22 +133,21 @@ export default function Home() {
             {/* Badge */}
             <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-indigo-400/20 bg-indigo-400/[0.07] px-4 py-2 text-xs font-medium text-indigo-300">
               <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
-              Plan your journey smarter
+              {t("badge")}
             </div>
 
             {/* Heading */}
             <h1 className="font-lexend text-4xl font-bold tracking-[-0.04em] sm:text-5xl lg:text-6xl">
-              Know When to
+              {t("heroTitle")}
               <br />
               <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent">
-                Book Your Ticket.
+                {t("heroTitleHighlight")}
               </span>
             </h1>
 
             {/* Description */}
             <p className="mx-auto mt-6 max-w-xl text-sm leading-7 text-slate-400 sm:text-base">
-              Select your journey date and instantly find out when your Indian
-              Railway train ticket booking window opens.
+              {t("heroDescription")}
             </p>
           </motion.div>
 
@@ -162,10 +175,12 @@ export default function Home() {
                     htmlFor="journey-date"
                     className="text-left text-xs font-semibold uppercase tracking-[0.15em] text-slate-400"
                   >
-                    Journey Date
+                    {t("journeyDate")}
                   </label>
 
-                  <span className="text-[11px] text-slate-600">Required</span>
+                  <span className="text-[11px] text-slate-600">
+                    {t("required")}
+                  </span>
                 </div>
 
                 {/* Date input */}
@@ -204,7 +219,7 @@ export default function Home() {
                   onClick={handleCalculate}
                   className="group mt-4 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 via-violet-500 to-cyan-500 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition-all duration-300 hover:scale-[1.01] hover:shadow-xl hover:shadow-indigo-500/25 active:scale-[0.99]"
                 >
-                  Calculate Booking Date
+                  {t("calculateBookingDate")}
                   <ArrowRight
                     size={18}
                     className="transition-transform duration-300 group-hover:translate-x-1"
@@ -215,7 +230,11 @@ export default function Home() {
           </motion.div>
 
           {/* Result */}
-          {result && <BookingResult result={result} />}
+          {result && (
+            <div id="booking-result" className="w-full">
+              <BookingResult result={result} />
+            </div>
+          )}
 
           {/* Information */}
           <motion.div
@@ -238,10 +257,7 @@ export default function Home() {
               </div>
 
               <p className="text-xs leading-5 text-slate-500">
-                The general Advance Reservation Period is 60 days before the
-                journey date, excluding the journey date. Opening-day booking is
-                available after 8:00 AM IST. Some trains may have a shorter
-                reservation period.
+                {t("advanceReservationPeriod")}
               </p>
             </div>
 
@@ -253,7 +269,7 @@ export default function Home() {
               aria-controls="how-rail-date-works"
               className="group mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-300 transition-colors duration-200 hover:text-cyan-300"
             >
-              {showHowItWorks ? "Hide how it works" : "How does RailDate work?"}
+              {showHowItWorks ? t("hideHowItWorks") : t("howRailDateWorks")}
 
               <ChevronDown
                 size={16}
@@ -283,19 +299,18 @@ export default function Home() {
               >
                 <div className="mb-5 text-left">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-indigo-300">
-                    Simple & Clear
+                    {t("simpleAndClear")}
                   </p>
 
                   <h2
                     id="how-rail-date-works-title"
                     className="mt-1 text-lg font-semibold tracking-[-0.02em] text-white"
                   >
-                    How does RailDate work?
+                    {t("howRailDateWorks")}
                   </h2>
 
                   <p className="mt-1.5 text-xs leading-5 text-slate-500">
-                    Find your Indian Railway ticket booking date in three simple
-                    steps.
+                    {t("howRailDateWorksDescription")}
                   </p>
                 </div>
 
@@ -321,15 +336,15 @@ export default function Home() {
                     </div>
 
                     <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-indigo-300">
-                      Step 01
+                      {t("step01")}
                     </p>
 
                     <h2 className="text-sm font-semibold text-white">
-                      Select Your Journey Date
+                      {t("step01Title")}
                     </h2>
 
                     <p className="mt-2 text-xs leading-5 text-slate-500">
-                      Choose the date you plan to travel by train.
+                      {t("step01Description")}
                     </p>
                   </motion.article>
 
@@ -354,16 +369,15 @@ export default function Home() {
                     </div>
 
                     <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-violet-300">
-                      Step 02
+                      {t("step02")}
                     </p>
 
                     <h2 className="text-sm font-semibold text-white">
-                      Calculate Your Booking Date
+                      {t("step02Title")}
                     </h2>
 
                     <p className="mt-2 text-xs leading-5 text-slate-500">
-                      RailDate calculates when your train ticket booking window
-                      opens.
+                      {t("step02Description")}
                     </p>
                   </motion.article>
 
@@ -388,16 +402,15 @@ export default function Home() {
                     </div>
 
                     <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-300">
-                      Step 03
+                      {t("step03")}
                     </p>
 
                     <h2 className="text-sm font-semibold text-white">
-                      Plan Ahead & Book
+                      {t("step03Title")}
                     </h2>
 
                     <p className="mt-2 text-xs leading-5 text-slate-500">
-                      Know your booking date in advance and be ready when
-                      reservations open.
+                      {t("step03Description")}
                     </p>
                   </motion.article>
                 </div>
@@ -408,9 +421,9 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="flex flex-col items-center justify-between gap-3 border-t border-white/[0.06] py-6 text-[11px] text-slate-600 sm:flex-row">
-          <p>RAILDATE · Personal Utility</p>
+          <p>RAILDATE · {t("personalUtility")}</p>
 
-          <p>Built for easier journey planning.</p>
+          <p>{t("easierJourneyPlanning")}</p>
         </footer>
       </div>
     </main>

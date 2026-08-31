@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { DayPicker } from "@daypicker/react";
 import { CalendarDays, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { formatLongDate } from "@/lib/dateUtils";
+import { useLanguage } from "@/components/LanguageProvider";
 import "@daypicker/react/style.css";
 
 interface DatePickerProps {
@@ -54,6 +55,7 @@ export default function DatePicker({
   onChange,
   minDate = new Date(),
 }: DatePickerProps) {
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
 
   /*
@@ -274,7 +276,7 @@ export default function DatePicker({
                           text-indigo-400
                         "
                       >
-                        Select Journey Date
+                        {t("selectJourneyDate")}
                       </p>
 
                       <p
@@ -284,7 +286,7 @@ export default function DatePicker({
                           text-slate-500
                         "
                       >
-                        Choose when you're travelling
+                        {t("chooseWhenTravelling")}
                       </p>
                     </div>
                   </div>
@@ -293,7 +295,7 @@ export default function DatePicker({
                   <button
                     type="button"
                     onClick={() => setOpen(false)}
-                    aria-label="Close calendar"
+                    aria-label={t("closeCalendar")}
                     className="
                       flex
                       h-10
@@ -396,7 +398,7 @@ export default function DatePicker({
                       hover:text-white
                     "
                   >
-                    Clear
+                    {t("clear")}
                   </button>
 
                   {/* Today */}
@@ -424,7 +426,7 @@ export default function DatePicker({
                     "
                   >
                     <CalendarDays size={14} />
-                    Today
+                    {t("today")}
                   </button>
                 </div>
               </div>
@@ -500,17 +502,17 @@ export default function DatePicker({
                 </p>
 
                 <p className="mt-0.5 text-[10px] uppercase tracking-[0.12em] text-slate-600">
-                  Journey Date
+                  {t("journeyDate")}
                 </p>
               </>
             ) : (
               <>
                 <p className="text-sm font-medium text-slate-400">
-                  Select your journey date
+                  {t("selectYourJourneyDate")}
                 </p>
 
                 <p className="mt-0.5 text-[10px] uppercase tracking-[0.12em] text-slate-600">
-                  Choose a date
+                  {t("chooseADate")}
                 </p>
               </>
             )}
@@ -521,7 +523,7 @@ export default function DatePicker({
             <span
               role="button"
               tabIndex={0}
-              aria-label="Clear date"
+              aria-label={t("clearDate")}
               onClick={(event) => {
                 event.stopPropagation();
 
