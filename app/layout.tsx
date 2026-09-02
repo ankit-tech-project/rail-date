@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Lexend, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import LanguageProvider from "@/components/LanguageProvider";
@@ -73,6 +73,12 @@ export const metadata: Metadata = {
     description:
       "Find out when your train ticket booking window opens based on your journey date.",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#070B14",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
