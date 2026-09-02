@@ -131,7 +131,7 @@ export const translations = {
     // Date Picker
     selectJourneyDate: "যাত্রার তারিখ নির্বাচন করুন",
     chooseWhenTravelling: "আপনি কবে ভ্রমণ করবেন তা নির্বাচন করুন",
-    selectYourJourneyDate: "আপনার যাত্রার তারিখ নির্বাচন করুন",
+    selectYourJourneyDate: "যাত্রার তারিখ নির্বাচন করুন",
     chooseADate: "একটি তারিখ নির্বাচন করুন",
     clear: "মুছে দিন",
     today: "আজ",
@@ -185,7 +185,7 @@ export const translations = {
     hideHowItWorks: "কীভাবে কাজ করে তা লুকান",
 
     step01: "ধাপ ০১",
-    step01Title: "যাত্রার তারিখ নির্বাচন করুন",
+    step01Title: "আপনার যাত্রার তারিখ নির্বাচন করুন",
     step01Description:
     "আপনি যে তারিখে ট্রেনে ভ্রমণ করতে চান সেটি নির্বাচন করুন।",
 
