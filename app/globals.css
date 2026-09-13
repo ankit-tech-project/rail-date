@@ -53,23 +53,23 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
    BOOKING DATE — ANIMATED HIGHLIGHT
    ========================================================= */
 
-   @keyframes booking-date-flow {
-    0% {
-      background-position: 100% 50%;
-    }
-  
-    50% {
-      background-position: 0% 50%;
-    }
-  
-    100% {
-      background-position: 100% 50%;
-    }
+@keyframes booking-date-flow {
+  0% {
+    background-position: 100% 50%;
   }
-  
-  .animate-booking-date-flow {
-    animation: booking-date-flow 4s ease-in-out infinite;
+
+  50% {
+    background-position: 0% 50%;
   }
+
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-booking-date-flow {
+  animation: booking-date-flow 4s ease-in-out infinite;
+}
 
 /* =========================================================
    RAILDATE CUSTOM CALENDAR
@@ -411,4 +411,33 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   .rail-calendar-weekday {
     font-size: 9px;
   }
+}
+
+/* Train Details modal scrollbar */
+.train-details-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(103, 232, 249, 0.22) transparent;
+}
+
+.train-details-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.train-details-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.train-details-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: rgba(103, 232, 249, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.train-details-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(103, 232, 249, 0.35);
+}
+
+.train-details-scrollbar::-webkit-scrollbar-corner {
+  background: transparent;
 }

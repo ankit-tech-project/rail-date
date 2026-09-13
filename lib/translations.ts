@@ -6,8 +6,7 @@ export const translations = {
     language: "English",
     languageName: "English",
     chooseLanguage: "Choose Language",
-    chooseLanguageDescription:
-      "Select your preferred language for RailDate.",
+    chooseLanguageDescription: "Select your preferred language for RailDate.",
 
     // Header
     brandSubtitle: "INDIAN RAILWAY DATE CALCULATOR",
@@ -65,8 +64,7 @@ export const translations = {
     importantInformation: "Important Information",
     advanceReservationBasedOnJourney:
       "Advance reservation opening is based on the journey date.",
-    generalBookingWindow:
-      "The general booking window opens at 8:00 AM IST.",
+    generalBookingWindow: "The general booking window opens at 8:00 AM IST.",
     verifyAvailability:
       "Please verify availability and railway booking rules before booking.",
 
@@ -83,18 +81,17 @@ export const translations = {
 
     step01: "Step 01",
     step01Title: "Select Your Journey Date",
-    step01Description:
-    "Choose the date you plan to travel by train.",
+    step01Description: "Choose the date you plan to travel by train.",
 
     step02: "Step 02",
     step02Title: "Calculate Your Booking Date",
     step02Description:
-    "RailDate calculates when your train ticket booking window opens.",
+      "RailDate calculates when your train ticket booking window opens.",
 
     step03: "Step 03",
     step03Title: "Plan Ahead & Book",
     step03Description:
-    "Know your booking date in advance and be ready when reservations open.",
+      "Know your booking date in advance and be ready when reservations open.",
 
     // Errors
     selectJourneyDateError: "Please select your journey date.",
@@ -102,6 +99,116 @@ export const translations = {
     // Footer
     personalUtility: "Personal Utility",
     easierJourneyPlanning: "Built for easier journey planning.",
+
+    // New Section For Train Details
+    dateCalculator: "Date Calculator",
+    trainDetails: "Train Details",
+    new: "New",
+
+    trainHeroBadge: "Explore Indian Railways",
+    trainHeroTitle: "Find Your Train.",
+    trainHeroTitleHighlight: "Plan Your Journey.",
+    trainHeroDescription:
+      "Search trains between stations, check schedules, routes and useful journey details — all in one place.",
+
+    trainSearch: "Find Trains",
+    trainSearchDescription: "Search trains between your selected stations.",
+    fromStation: "From Station",
+    fromStationPlaceholder: "Enter boarding station",
+    toStation: "To Station",
+    toStationPlaceholder: "Enter destination station",
+    swapStations: "Swap stations",
+    quota: "Quota",
+    general: "General",
+    tatkal: "Tatkal",
+    premiumTatkal: "Premium Tatkal",
+    searchTrains: "Search Trains",
+    searching: "Searching...",
+
+    clearStation: "Clear station",
+    noStationsFound: "No stations found",
+    tryStationNameOrCode: "Try a station name or code",
+
+    selectFromStation: "Please select your boarding station.",
+    selectToStation: "Please select your destination station.",
+    selectDifferentStations: "Please select different stations.",
+
+    availableTrains: "Available Trains",
+    trainsFoundForJourney: "Trains found for your selected journey",
+
+    viewDetails: "View Details",
+
+    classesAndFare: "Classes & Fare",
+    stoppages: "Stoppages",
+    alternatives: "Alternatives",
+    more: "More",
+
+    classesAndFareTitle: "Classes & Fare",
+    classesAndFareDescription:
+      "Available travel classes and class-wise fare information will appear here.",
+
+    loadingFareInformation: "Loading fare information...",
+    fetchingClassesAndFares: "Fetching available classes and fares.",
+
+    fareInformationUnavailable: "Fare information unavailable",
+    fareDetailsCouldNotBeLoaded:
+      "Fare details could not be loaded for this journey.",
+
+    totalFare: "Total Fare",
+    baseFare: "Base Fare",
+    reservation: "Reservation",
+    superfast: "Superfast",
+    catering: "Catering",
+    otherCharges: "Other Charges",
+
+    noFareInformationAvailable: "No fare information available",
+    fareDetailsNotAvailable:
+      "Fare details are not available for this train and journey.",
+
+    stationStoppages: "Station Stoppages",
+    stationStoppagesDescription:
+      "Actual scheduled stoppages and timings for this train.",
+
+    loadingStoppages: "Loading stoppages...",
+    fetchingTrainRouteAndStoppages:
+      "Fetching the train route and scheduled stoppages.",
+
+    stoppageInformationUnavailable: "Stoppage information unavailable",
+    trainRoute: "Train Route",
+
+    stoppagesCount: "stoppages",
+    arrival: "Arr",
+    departure: "Dep",
+    platform: "Platform",
+
+    timeUnavailable: "Time unavailable",
+    stop: "Stop",
+
+    noStoppageInformationAvailable: "No stoppage information available",
+    routeInformationCouldNotBeFound:
+      "Route information could not be found for this train.",
+
+    alternativeJourney: "Alternative Journey",
+    alternativeJourneyDescription:
+      "Useful connecting journey options will appear here when available.",
+
+    alternativeRoutesComingSoon: "Alternative routes will be added soon.",
+    connectingJourneysDescription:
+      "We will find practical connecting journeys to your destination.",
+
+    moreInformation: "More Information",
+    moreInformationDescription:
+      "Additional operational information about this train.",
+
+    trainNumber: "Train Number",
+    journeyDuration: "Journey Duration",
+    distance: "Distance",
+    runsOn: "Runs On",
+    noTrainsAvailable: "No Trains Available",
+    noTrainsBetween: "No trains are available between",
+    selectedJourneyDate: "for your selected journey date.",
+    tryAnotherJourneyDate: "Try selecting another journey date.",
+    and: "and",
   },
 
   bn: {
@@ -168,8 +275,7 @@ export const translations = {
     importantInformation: "গুরুত্বপূর্ণ তথ্য",
     advanceReservationBasedOnJourney:
       "অগ্রিম বুকিং শুরুর তারিখ আপনার যাত্রার তারিখের উপর নির্ভর করে।",
-    generalBookingWindow:
-      "সাধারণ বুকিং উইন্ডো সকাল ৮:০০টা IST-এ শুরু হয়।",
+    generalBookingWindow: "সাধারণ বুকিং উইন্ডো সকাল ৮:০০টা IST-এ শুরু হয়।",
     verifyAvailability:
       "বুকিং করার আগে আসন উপলভ্যতা এবং রেলের বুকিং নিয়ম যাচাই করে নিন।",
 
@@ -187,17 +293,17 @@ export const translations = {
     step01: "ধাপ ০১",
     step01Title: "আপনার যাত্রার তারিখ নির্বাচন করুন",
     step01Description:
-    "আপনি যে তারিখে ট্রেনে ভ্রমণ করতে চান সেটি নির্বাচন করুন।",
+      "আপনি যে তারিখে ট্রেনে ভ্রমণ করতে চান সেটি নির্বাচন করুন।",
 
     step02: "ধাপ ০২",
     step02Title: "আপনার বুকিংয়ের তারিখ গণনা করুন",
     step02Description:
-    "RailDate আপনার ট্রেনের টিকিট বুকিং কখন শুরু হবে তা গণনা করে।",
+      "RailDate আপনার ট্রেনের টিকিট বুকিং কখন শুরু হবে তা গণনা করে।",
 
     step03: "ধাপ ০৩",
     step03Title: "আগে থেকে পরিকল্পনা করুন ও বুক করুন",
     step03Description:
-    "আপনার বুকিংয়ের তারিখ আগে থেকেই জেনে রাখুন এবং বুকিং শুরু হওয়ার সময় প্রস্তুত থাকুন।",
+      "আপনার বুকিংয়ের তারিখ আগে থেকেই জেনে রাখুন এবং বুকিং শুরু হওয়ার সময় প্রস্তুত থাকুন।",
 
     // Errors
     selectJourneyDateError: "অনুগ্রহ করে আপনার যাত্রার তারিখ নির্বাচন করুন।",
@@ -205,5 +311,112 @@ export const translations = {
     // Footer
     personalUtility: "ব্যক্তিগত ইউটিলিটি",
     easierJourneyPlanning: "সহজ যাত্রা পরিকল্পনার জন্য তৈরি।",
+
+    // New Section For Train Details
+    dateCalculator: "তারিখ ক্যালকুলেটর",
+    trainDetails: "ট্রেনের তথ্য",
+    new: "নতুন",
+
+    trainHeroBadge: "ভারতীয় রেলওয়ে অন্বেষণ করুন",
+    trainHeroTitle: "আপনার ট্রেন খুঁজুন।",
+    trainHeroTitleHighlight: "আপনার যাত্রা পরিকল্পনা করুন।",
+    trainHeroDescription:
+      "স্টেশনের মধ্যে ট্রেন খুঁজুন, সময়সূচি, রুট এবং আপনার যাত্রার গুরুত্বপূর্ণ তথ্য এক জায়গায় দেখুন।",
+
+    trainSearch: "ট্রেন খুঁজুন",
+    trainSearchDescription: "আপনার নির্বাচিত স্টেশনগুলির মধ্যে ট্রেন খুঁজুন।",
+    fromStation: "যাত্রার স্টেশন",
+    fromStationPlaceholder: "যাত্রার স্টেশন লিখুন",
+    toStation: "গন্তব্য স্টেশন",
+    toStationPlaceholder: "গন্তব্য স্টেশন লিখুন",
+    swapStations: "স্টেশন পরিবর্তন করুন",
+    quota: "কোটা",
+    general: "সাধারণ",
+    tatkal: "তৎকাল",
+    premiumTatkal: "প্রিমিয়াম তৎকাল",
+    searchTrains: "ট্রেন খুঁজুন",
+    searching: "খোঁজা হচ্ছে...",
+
+    clearStation: "স্টেশন মুছুন",
+    noStationsFound: "কোনও স্টেশন পাওয়া যায়নি",
+    tryStationNameOrCode: "স্টেশনের নাম বা কোড দিয়ে চেষ্টা করুন",
+
+    selectFromStation: "অনুগ্রহ করে আপনার যাত্রার স্টেশন নির্বাচন করুন।",
+    selectToStation: "অনুগ্রহ করে আপনার গন্তব্য স্টেশন নির্বাচন করুন।",
+    selectDifferentStations: "অনুগ্রহ করে ভিন্ন স্টেশন নির্বাচন করুন।",
+
+    availableTrains: "উপলব্ধ ট্রেন",
+    trainsFoundForJourney: "আপনার নির্বাচিত যাত্রার জন্য ট্রেন পাওয়া গেছে",
+
+    viewDetails: "বিস্তারিত দেখুন",
+
+    classesAndFare: "শ্রেণি ও ভাড়া",
+    stoppages: "স্টপেজ",
+    alternatives: "বিকল্প",
+    more: "আরও",
+
+    classesAndFareTitle: "শ্রেণি ও ভাড়া",
+    classesAndFareDescription:
+      "উপলব্ধ ভ্রমণ শ্রেণি এবং প্রতিটি শ্রেণির ভাড়ার তথ্য এখানে দেখা যাবে।",
+
+    loadingFareInformation: "ভাড়ার তথ্য লোড হচ্ছে...",
+    fetchingClassesAndFares: "উপলব্ধ শ্রেণি ও ভাড়ার তথ্য সংগ্রহ করা হচ্ছে।",
+
+    fareInformationUnavailable: "ভাড়ার তথ্য পাওয়া যায়নি",
+    fareDetailsCouldNotBeLoaded: "এই যাত্রার জন্য ভাড়ার তথ্য লোড করা যায়নি।",
+
+    totalFare: "মোট ভাড়া",
+    baseFare: "প্রাথমিক ভাড়া",
+    reservation: "রিজার্ভেশন",
+    superfast: "সুপারফাস্ট",
+    catering: "ক্যাটারিং",
+    otherCharges: "অন্যান্য চার্জ",
+
+    noFareInformationAvailable: "ভাড়ার তথ্য পাওয়া যায়নি",
+    fareDetailsNotAvailable: "এই ট্রেন ও যাত্রার জন্য ভাড়ার তথ্য উপলব্ধ নেই।",
+
+    stationStoppages: "স্টেশন স্টপেজ",
+    stationStoppagesDescription:
+      "এই ট্রেনের নির্ধারিত স্টপেজ ও সময়সূচি এখানে দেখুন।",
+
+    loadingStoppages: "স্টপেজ লোড হচ্ছে...",
+    fetchingTrainRouteAndStoppages:
+      "ট্রেনের রুট ও নির্ধারিত স্টপেজের তথ্য সংগ্রহ করা হচ্ছে।",
+    stoppageInformationUnavailable: "স্টপেজের তথ্য পাওয়া যায়নি",
+
+    trainRoute: "ট্রেনের রুট",
+    stoppagesCount: "স্টপেজ",
+
+    arrival: "আগমন",
+    departure: "প্রস্থান",
+    platform: "প্ল্যাটফর্ম",
+
+    timeUnavailable: "সময় পাওয়া যায়নি",
+    stop: "স্টপ",
+
+    noStoppageInformationAvailable: "স্টপেজের তথ্য পাওয়া যায়নি",
+    routeInformationCouldNotBeFound:
+      "এই ট্রেনের রুটের তথ্য খুঁজে পাওয়া যায়নি।",
+
+    alternativeJourney: "বিকল্প যাত্রা",
+    alternativeJourneyDescription:
+      "উপলব্ধ থাকলে উপযোগী সংযোগকারী যাত্রার বিকল্পগুলি এখানে দেখা যাবে।",
+
+    alternativeRoutesComingSoon: "বিকল্প রুট শীঘ্রই যোগ করা হবে।",
+    connectingJourneysDescription:
+      "আপনার গন্তব্যে পৌঁছানোর জন্য ব্যবহারিক সংযোগকারী যাত্রার বিকল্প খুঁজে দেওয়া হবে।",
+
+    moreInformation: "আরও তথ্য",
+    moreInformationDescription: "এই ট্রেনের অতিরিক্ত পরিচালনাগত তথ্য।",
+
+    trainNumber: "ট্রেন নম্বর",
+    journeyDuration: "যাত্রার সময়কাল",
+    distance: "দূরত্ব",
+    runsOn: "চলে",
+    noTrainsAvailable: "কোনও ট্রেন পাওয়া যায়নি",
+    noTrainsBetween: "এর মধ্যে কোনও ট্রেন পাওয়া যায়নি",
+    selectedJourneyDate: "আপনার নির্বাচিত যাত্রার তারিখের জন্য।",
+    tryAnotherJourneyDate: "অন্য একটি যাত্রার তারিখ নির্বাচন করে দেখুন।",
+    and: "এবং",
   },
 } as const;

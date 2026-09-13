@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CalendarDays,
   ArrowRight,
@@ -10,11 +10,12 @@ import {
   Calculator,
   Clock3,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import DatePicker from "@/components/DatePicker";
 import BookingResult from "@/components/BookingResult";
 import LanguageSelector from "@/components/LanguageSelector";
+import TrainSearchForm from "@/components/TrainSearchForm";
 import { useLanguage } from "@/components/LanguageProvider";
 import { calculateBookingDate } from "@/lib/bookingDate";
 import { formatInputDate } from "@/lib/dateUtils";
@@ -28,6 +29,21 @@ export default function Home() {
 
   const [error, setError] = useState("");
   const [showHowItWorks, setShowHowItWorks] = useState(false);
+
+  const [activeMode, setActiveMode] = useState<"calculator" | "trains">(
+    "calculator"
+  );
+  const [isModeReady, setIsModeReady] = useState(false);
+
+  useEffect(() => {
+    const savedMode = window.localStorage.getItem("raildate-active-mode");
+  
+    if (savedMode === "calculator" || savedMode === "trains") {
+      setActiveMode(savedMode);
+    }
+  
+    setIsModeReady(true);
+  }, []);
 
   /*
    * Today's date in YYYY-MM-DD format.
@@ -74,6 +90,12 @@ export default function Home() {
     setResult(null);
   };
 
+  if (!isModeReady) {
+    return (
+      <main className="min-h-screen bg-[#070B14]" />
+    );
+  }
+  
   return (
     <main className="min-h-screen overflow-hidden bg-[#070B14] text-white">
       {/* Background */}
@@ -114,309 +136,426 @@ export default function Home() {
           </div>
         </header>
 
+        {/* Mode Switch */}
+        <div className="mt-8 flex justify-center">
+          <div className="relative flex w-full max-w-md rounded-2xl border border-white/10 bg-[#0D121D]/80 p-1.5 shadow-lg shadow-black/20 backdrop-blur-xl">
+            <motion.div
+              layout
+              transition={{
+                type: "spring",
+                stiffness: 360,
+                damping: 28,
+                mass: 0.8,
+              }}
+              className="pointer-events-none absolute inset-y-1.5 w-[calc(50%-6px)] overflow-hidden rounded-xl border border-white/10 bg-white/[0.07]"
+              style={{
+                left: activeMode === "calculator" ? "6px" : "calc(50% + 0px)",
+              }}
+            >
+              {/* Moving gradient glow */}
+              <motion.div
+                animate={{
+                  x: ["-120%", "120%"],
+                }}
+                transition={{
+                  duration: 3.5,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+                className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent blur-xl"
+              />
+
+              {/* Subtle top highlight */}
+              <div className="absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent" />
+            </motion.div>
+
+            {/* Date Calculator */}
+            <button
+              type="button"
+              onClick={() => {
+                setActiveMode("calculator");
+                window.localStorage.setItem(
+                  "raildate-active-mode",
+                  "calculator"
+                );
+              }}
+              className={`relative z-10 flex h-11 flex-1 items-center justify-center gap-2 rounded-xl text-xs font-semibold transition-all duration-300 ${
+                activeMode === "calculator"
+                  ? "text-white"
+                  : "text-slate-400 hover:text-slate-200"
+              }`}
+            >
+              <CalendarDays
+                size={16}
+                className="transition-transform duration-300"
+              />
+
+              <span>{t("dateCalculator")}</span>
+            </button>
+
+            {/* Train Details */}
+            <button
+              type="button"
+              onClick={() => {
+                setActiveMode("trains");
+                window.localStorage.setItem("raildate-active-mode", "trains");
+              }}
+              className={`relative z-10 flex h-11 flex-1 items-center justify-center gap-2 rounded-xl text-xs font-semibold transition-all duration-300 ${
+                activeMode === "trains"
+                  ? "text-white"
+                  : "text-slate-400 hover:text-slate-200"
+              }`}
+            >
+              <TrainFront
+                size={16}
+                className="transition-transform duration-300"
+              />
+
+              <span>{t("trainDetails")}</span>
+
+              {/* NEW Badge */}
+              <span className="absolute right-3 top-[-7px] rounded-full border border-cyan-300/20 bg-[#0D121D] px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.12em] text-cyan-300 shadow-sm shadow-cyan-400/10">
+                {t("new")}
+              </span>
+            </button>
+          </div>
+        </div>
+
         {/* Hero */}
         <section className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center py-16 text-center">
           {/* Hero Text */}
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.6,
-            }}
-          >
-            {/* Badge */}
-            <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-indigo-400/20 bg-indigo-400/[0.07] px-4 py-2 text-xs font-medium text-indigo-300">
-              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
-              {t("badge")}
-            </div>
-
-            {/* Heading */}
-            <h1 className="font-lexend text-4xl font-bold tracking-[-0.04em] sm:text-5xl lg:text-6xl">
-              {t("heroTitle")}
-              <br />
-              <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent">
-                {t("heroTitleHighlight")}
-              </span>
-            </h1>
-
-            {/* Description */}
-            <p className="mx-auto mt-6 max-w-xl text-sm leading-7 text-slate-400 sm:text-base">
-              {t("heroDescription")}
-            </p>
-          </motion.div>
-
-          {/* Calculator */}
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 30,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.7,
-              delay: 0.15,
-            }}
-            className="mt-12 w-full"
-          >
-            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-3 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-4">
-              <div className="rounded-2xl border border-white/[0.06] bg-[#0D121D]/90 p-5 sm:p-7">
-                {/* Label row */}
-                <div className="mb-3 flex items-center justify-between">
-                  <label
-                    htmlFor="journey-date"
-                    className="text-left text-xs font-semibold uppercase tracking-[0.15em] text-slate-400"
-                  >
-                    {t("journeyDate")}
-                  </label>
-
-                  <span className="text-[11px] text-slate-600">
-                    {t("required")}
-                  </span>
+          <AnimatePresence mode="wait">
+            {activeMode === "calculator" ? (
+              <motion.div
+                key="calculator-hero"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{
+                  duration: 0.45,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                {/* Badge */}
+                <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-indigo-400/20 bg-indigo-400/[0.07] px-4 py-2 text-xs font-medium text-indigo-300">
+                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                  {t("badge")}
                 </div>
 
-                {/* Date input */}
-                <DatePicker
-                  value={journeyDate}
-                  onChange={(value) => {
-                    setJourneyDate(value);
+                {/* Heading */}
+                <h1 className="font-lexend text-4xl font-bold tracking-[-0.04em] sm:text-5xl lg:text-6xl">
+                  {t("heroTitle")}
+                  <br />
+                  <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent">
+                    {t("heroTitleHighlight")}
+                  </span>
+                </h1>
 
-                    setError("");
+                {/* Description */}
+                <p className="mx-auto mt-6 max-w-xl text-sm leading-7 text-slate-400 sm:text-base">
+                  {t("heroDescription")}
+                </p>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="trains-hero"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{
+                  duration: 0.45,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                {/* Badge */}
+                <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/[0.07] px-4 py-2 text-xs font-medium text-cyan-300">
+                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                  {t("trainHeroBadge")}
+                </div>
 
-                    setResult(null);
-                  }}
-                  minDate={new Date()}
-                />
+                {/* Heading */}
+                <h1 className="font-lexend text-4xl font-bold tracking-[-0.04em] sm:text-5xl lg:text-6xl">
+                  {t("trainHeroTitle")}
+                  <br />
+                  <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent">
+                    {t("trainHeroTitleHighlight")}
+                  </span>
+                </h1>
 
-                {/* Error */}
-                {error && (
-                  <motion.p
-                    initial={{
-                      opacity: 0,
-                      y: -5,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    className="mt-3 text-left text-xs font-medium text-rose-400"
-                  >
-                    {error}
-                  </motion.p>
-                )}
+                {/* Description */}
+                <p className="mx-auto mt-6 max-w-xl text-sm leading-7 text-slate-400 sm:text-base">
+                  {t("trainHeroDescription")}
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-                {/* Calculate */}
+          {/* Main Feature Content */}
+          <AnimatePresence mode="wait">
+            {activeMode === "calculator" ? (
+              <motion.div
+                key="calculator"
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{
+                  duration: 0.4,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="mt-12 w-full"
+              >
+                <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-3 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-4">
+                  <div className="rounded-2xl border border-white/[0.06] bg-[#0D121D]/90 p-5 sm:p-7">
+                    {/* Label row */}
+                    <div className="mb-3 flex items-center justify-between">
+                      <label
+                        htmlFor="journey-date"
+                        className="text-left text-xs font-semibold uppercase tracking-[0.15em] text-slate-400"
+                      >
+                        {t("journeyDate")}
+                      </label>
+
+                      <span className="text-[11px] text-slate-600">
+                        {t("required")}
+                      </span>
+                    </div>
+
+                    {/* Date input */}
+                    <DatePicker
+                      value={journeyDate}
+                      onChange={(value) => {
+                        setJourneyDate(value);
+                        setError("");
+                        setResult(null);
+                      }}
+                      minDate={new Date()}
+                    />
+
+                    {/* Error */}
+                    {error && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-3 text-left text-xs font-medium text-rose-400"
+                      >
+                        {error}
+                      </motion.p>
+                    )}
+
+                    {/* Calculate */}
+                    <button
+                      type="button"
+                      onClick={handleCalculate}
+                      className="group mt-4 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 via-violet-500 to-cyan-500 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition-all duration-300 hover:scale-[1.01] hover:shadow-xl hover:shadow-indigo-500/25 active:scale-[0.99]"
+                    >
+                      {t("calculateBookingDate")}
+
+                      <ArrowRight
+                        size={18}
+                        className="transition-transform duration-300 group-hover:translate-x-1"
+                      />
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            ) : (
+              <TrainSearchForm />
+            )}
+          </AnimatePresence>
+
+          {/* Calculator-only supporting content */}
+          {activeMode === "calculator" && (
+            <>
+              {/* Result */}
+              {result && (
+                <div id="booking-result" className="w-full">
+                  <BookingResult result={result} />
+                </div>
+              )}
+
+              {/* Information */}
+              <motion.div
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+                transition={{
+                  duration: 0.7,
+                  delay: 0.35,
+                }}
+                className="mt-8 w-full max-w-2xl"
+              >
+                {/* Reservation information */}
+                <div className="flex items-start gap-3 text-left">
+                  <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/[0.05]">
+                    <CalendarDays size={14} className="text-slate-500" />
+                  </div>
+
+                  <p className="text-xs leading-5 text-slate-500">
+                    {t("advanceReservationPeriod")}
+                  </p>
+                </div>
+
+                {/* How it works toggle */}
                 <button
                   type="button"
-                  onClick={handleCalculate}
-                  className="group mt-4 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 via-violet-500 to-cyan-500 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition-all duration-300 hover:scale-[1.01] hover:shadow-xl hover:shadow-indigo-500/25 active:scale-[0.99]"
+                  onClick={() => setShowHowItWorks((current) => !current)}
+                  aria-expanded={showHowItWorks}
+                  aria-controls="how-rail-date-works"
+                  className="group mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-300 transition-colors duration-200 hover:text-cyan-300"
                 >
-                  {t("calculateBookingDate")}
-                  <ArrowRight
-                    size={18}
-                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  {showHowItWorks ? t("hideHowItWorks") : t("howRailDateWorks")}
+
+                  <ChevronDown
+                    size={16}
+                    className={`transition-transform duration-300 ${
+                      showHowItWorks ? "rotate-180" : ""
+                    }`}
                   />
                 </button>
-              </div>
-            </div>
-          </motion.div>
 
-          {/* Result */}
-          {result && (
-            <div id="booking-result" className="w-full">
-              <BookingResult result={result} />
-            </div>
+                {/* How it works cards */}
+                <motion.div
+                  initial={false}
+                  animate={{
+                    height: showHowItWorks ? "auto" : 0,
+                    opacity: showHowItWorks ? 1 : 0,
+                    marginTop: showHowItWorks ? 20 : 0,
+                  }}
+                  transition={{
+                    duration: 0.35,
+                    ease: "easeInOut",
+                  }}
+                  className="overflow-hidden"
+                >
+                  <section
+                    id="how-rail-date-works"
+                    aria-labelledby="how-rail-date-works-title"
+                  >
+                    <div className="mb-5 text-left">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-indigo-300">
+                        {t("simpleAndClear")}
+                      </p>
+
+                      <h2
+                        id="how-rail-date-works-title"
+                        className="mt-1 text-lg font-semibold tracking-[-0.02em] text-white"
+                      >
+                        {t("howRailDateWorks")}
+                      </h2>
+
+                      <p className="mt-1.5 text-xs leading-5 text-slate-500">
+                        {t("howRailDateWorksDescription")}
+                      </p>
+                    </div>
+
+                    <div className="grid gap-3 text-left sm:grid-cols-3">
+                      {/* Step 1 */}
+                      <motion.article
+                        initial={{
+                          opacity: 0,
+                          y: 12,
+                        }}
+                        animate={{
+                          opacity: showHowItWorks ? 1 : 0,
+                          y: showHowItWorks ? 0 : 12,
+                        }}
+                        transition={{
+                          duration: 0.3,
+                          delay: showHowItWorks ? 0.05 : 0,
+                        }}
+                        className="rounded-2xl border border-white/[0.08] bg-white/[0.035] p-4 backdrop-blur-xl"
+                      >
+                        <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-300">
+                          <MousePointerClick size={18} />
+                        </div>
+
+                        <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-indigo-300">
+                          {t("step01")}
+                        </p>
+
+                        <h2 className="text-sm font-semibold text-white">
+                          {t("step01Title")}
+                        </h2>
+
+                        <p className="mt-2 text-xs leading-5 text-slate-500">
+                          {t("step01Description")}
+                        </p>
+                      </motion.article>
+
+                      {/* Step 2 */}
+                      <motion.article
+                        initial={{
+                          opacity: 0,
+                          y: 12,
+                        }}
+                        animate={{
+                          opacity: showHowItWorks ? 1 : 0,
+                          y: showHowItWorks ? 0 : 12,
+                        }}
+                        transition={{
+                          duration: 0.3,
+                          delay: showHowItWorks ? 0.1 : 0,
+                        }}
+                        className="rounded-2xl border border-white/[0.08] bg-white/[0.035] p-4 backdrop-blur-xl"
+                      >
+                        <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-xl bg-violet-500/10 text-violet-300">
+                          <Calculator size={18} />
+                        </div>
+
+                        <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-violet-300">
+                          {t("step02")}
+                        </p>
+
+                        <h2 className="text-sm font-semibold text-white">
+                          {t("step02Title")}
+                        </h2>
+
+                        <p className="mt-2 text-xs leading-5 text-slate-500">
+                          {t("step02Description")}
+                        </p>
+                      </motion.article>
+
+                      {/* Step 3 */}
+                      <motion.article
+                        initial={{
+                          opacity: 0,
+                          y: 12,
+                        }}
+                        animate={{
+                          opacity: showHowItWorks ? 1 : 0,
+                          y: showHowItWorks ? 0 : 12,
+                        }}
+                        transition={{
+                          duration: 0.3,
+                          delay: showHowItWorks ? 0.15 : 0,
+                        }}
+                        className="rounded-2xl border border-white/[0.08] bg-white/[0.035] p-4 backdrop-blur-xl"
+                      >
+                        <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-300">
+                          <Clock3 size={18} />
+                        </div>
+
+                        <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-300">
+                          {t("step03")}
+                        </p>
+
+                        <h2 className="text-sm font-semibold text-white">
+                          {t("step03Title")}
+                        </h2>
+
+                        <p className="mt-2 text-xs leading-5 text-slate-500">
+                          {t("step03Description")}
+                        </p>
+                      </motion.article>
+                    </div>
+                  </section>
+                </motion.div>
+              </motion.div>
+            </>
           )}
-
-          {/* Information */}
-          <motion.div
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            transition={{
-              duration: 0.7,
-              delay: 0.35,
-            }}
-            className="mt-8 w-full max-w-2xl"
-          >
-            {/* Reservation information */}
-            <div className="flex items-start gap-3 text-left">
-              <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/[0.05]">
-                <CalendarDays size={14} className="text-slate-500" />
-              </div>
-
-              <p className="text-xs leading-5 text-slate-500">
-                {t("advanceReservationPeriod")}
-              </p>
-            </div>
-
-            {/* How it works toggle */}
-            <button
-              type="button"
-              onClick={() => setShowHowItWorks((current) => !current)}
-              aria-expanded={showHowItWorks}
-              aria-controls="how-rail-date-works"
-              className="group mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-300 transition-colors duration-200 hover:text-cyan-300"
-            >
-              {showHowItWorks ? t("hideHowItWorks") : t("howRailDateWorks")}
-
-              <ChevronDown
-                size={16}
-                className={`transition-transform duration-300 ${
-                  showHowItWorks ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-
-            {/* How it works cards */}
-            <motion.div
-              initial={false}
-              animate={{
-                height: showHowItWorks ? "auto" : 0,
-                opacity: showHowItWorks ? 1 : 0,
-                marginTop: showHowItWorks ? 20 : 0,
-              }}
-              transition={{
-                duration: 0.35,
-                ease: "easeInOut",
-              }}
-              className="overflow-hidden"
-            >
-              <section
-                id="how-rail-date-works"
-                aria-labelledby="how-rail-date-works-title"
-              >
-                <div className="mb-5 text-left">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-indigo-300">
-                    {t("simpleAndClear")}
-                  </p>
-
-                  <h2
-                    id="how-rail-date-works-title"
-                    className="mt-1 text-lg font-semibold tracking-[-0.02em] text-white"
-                  >
-                    {t("howRailDateWorks")}
-                  </h2>
-
-                  <p className="mt-1.5 text-xs leading-5 text-slate-500">
-                    {t("howRailDateWorksDescription")}
-                  </p>
-                </div>
-
-                <div className="grid gap-3 text-left sm:grid-cols-3">
-                  {/* Step 1 */}
-                  <motion.article
-                    initial={{
-                      opacity: 0,
-                      y: 12,
-                    }}
-                    animate={{
-                      opacity: showHowItWorks ? 1 : 0,
-                      y: showHowItWorks ? 0 : 12,
-                    }}
-                    transition={{
-                      duration: 0.3,
-                      delay: showHowItWorks ? 0.05 : 0,
-                    }}
-                    className="rounded-2xl border border-white/[0.08] bg-white/[0.035] p-4 backdrop-blur-xl"
-                  >
-                    <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-300">
-                      <MousePointerClick size={18} />
-                    </div>
-
-                    <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-indigo-300">
-                      {t("step01")}
-                    </p>
-
-                    <h2 className="text-sm font-semibold text-white">
-                      {t("step01Title")}
-                    </h2>
-
-                    <p className="mt-2 text-xs leading-5 text-slate-500">
-                      {t("step01Description")}
-                    </p>
-                  </motion.article>
-
-                  {/* Step 2 */}
-                  <motion.article
-                    initial={{
-                      opacity: 0,
-                      y: 12,
-                    }}
-                    animate={{
-                      opacity: showHowItWorks ? 1 : 0,
-                      y: showHowItWorks ? 0 : 12,
-                    }}
-                    transition={{
-                      duration: 0.3,
-                      delay: showHowItWorks ? 0.1 : 0,
-                    }}
-                    className="rounded-2xl border border-white/[0.08] bg-white/[0.035] p-4 backdrop-blur-xl"
-                  >
-                    <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-xl bg-violet-500/10 text-violet-300">
-                      <Calculator size={18} />
-                    </div>
-
-                    <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-violet-300">
-                      {t("step02")}
-                    </p>
-
-                    <h2 className="text-sm font-semibold text-white">
-                      {t("step02Title")}
-                    </h2>
-
-                    <p className="mt-2 text-xs leading-5 text-slate-500">
-                      {t("step02Description")}
-                    </p>
-                  </motion.article>
-
-                  {/* Step 3 */}
-                  <motion.article
-                    initial={{
-                      opacity: 0,
-                      y: 12,
-                    }}
-                    animate={{
-                      opacity: showHowItWorks ? 1 : 0,
-                      y: showHowItWorks ? 0 : 12,
-                    }}
-                    transition={{
-                      duration: 0.3,
-                      delay: showHowItWorks ? 0.15 : 0,
-                    }}
-                    className="rounded-2xl border border-white/[0.08] bg-white/[0.035] p-4 backdrop-blur-xl"
-                  >
-                    <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-300">
-                      <Clock3 size={18} />
-                    </div>
-
-                    <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-300">
-                      {t("step03")}
-                    </p>
-
-                    <h2 className="text-sm font-semibold text-white">
-                      {t("step03Title")}
-                    </h2>
-
-                    <p className="mt-2 text-xs leading-5 text-slate-500">
-                      {t("step03Description")}
-                    </p>
-                  </motion.article>
-                </div>
-              </section>
-            </motion.div>
-          </motion.div>
         </section>
 
         {/* Footer */}
